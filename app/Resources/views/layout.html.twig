@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}KnpUniversity: The Raptor Store!{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/css/main.css" />
+        <link rel="stylesheet" href="/css/font-awesome.min.css" />
+    {% endblock %}
+</head>
+<body>
+
+
+<div class="container">
+    <div class="header clearfix">
+        <nav class="navigation-margin">
+            <ul class="nav nav-pills pull-right">
+                <li>
+                    <a href="{{ path('homepage') }}">Home</a>
+                </li>
+                <li><a href="{{ path('admin') }}">Admin</a></li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li><a href="{{ path('admin_logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ path('login') }}">Login</a></li>
+                {% endif %}
+                <li><a href="{{ path('db_rebuild') }}">Reset DB</a></li>
+            </ul>
+        </nav>
+        <h1>The Raptor Store</h1>
+    </div>
+    <hr>
+    <p class="text-center">Fence security <span class="label label-success">activated</span></p>
+
+    <div class="row">
+        <div class="col-sm-12">
+            {% if app.session.flashBag.has('success') %}
+                <div class="alert alert-success">
+                    {% for msg in app.session.flashBag.get('success') %}
+                    {{ msg }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+</div>
+<footer class="footer footer-styling">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <h1 class="knpu"><a href="http://knpuniversity.com">KnpUniversity.com</a></h1>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <ul class="nav pull-right footer-nav">
+                    <li>
+                        <form class="navbar-form" role="search" method="GET" action="{{ path('product_search') }}">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search" value="" name="searchTerm">
+                                <div class="input-group-btn">
+                                    <button id="search_submit" class="btn btn-default" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div id="modal-content-holder" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body clearfix"></div>
+        </div>
+    </div>
+</div>
+
+{% block javascripts %}
+    <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+{% endblock %}
+</body>
+</html>
