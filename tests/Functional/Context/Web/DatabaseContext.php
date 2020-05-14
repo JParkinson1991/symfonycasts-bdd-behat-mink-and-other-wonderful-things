@@ -19,6 +19,9 @@ use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader;
 class DatabaseContext extends BaseWebContext
 {
     /**
+     * Purges the database prior to executing a scenario tagged with
+     * @cleanDatabase
+     *
      * @BeforeScenario @cleanDatabase
      */
     public function cleanDatabase()
